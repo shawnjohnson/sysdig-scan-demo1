@@ -11,9 +11,8 @@ phases:
   install:
     commands:
       # Install GitHub CLI from Community repo
-      - sudo yum install yum-config-manager
-      - sudo yum-config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-      - sudo yum install gh
+      - curl -LO https://github.com/cli/cli/releases/download/v2.14.3/gh_2.14.3_linux_amd64.rpm
+      - sudo yum install gh_2.14.3_linux_amd64.rpm
 
   pre_build:
     commands:
