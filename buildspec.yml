@@ -6,19 +6,37 @@ env:
   parameter-store:
     SECURE_API_TOKEN: /CodeBuild/SYSDIG_API_TOKEN
     SYSDIG_API_ENDPOINT: /CodeBuild/SYSDIG_API_URL
+    GITHUB_TOKEN: /CodeBuild/GITHUB_TOKEN	
+
 
 phases:
   install:
     commands:
+      # Install GitHub CLI
+      - curl -LO https://github.com/cli/cli/releases/download/v2.14.3/gh_2.14.3_linux_amd64.rpm
+      - sudo yum install gh_2.14.3_linux_amd64.rpm -y
+
+  pre_build:
+    commands:
       # Download most recent version of Sysdig CLI Scanner
       - curl -LO https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/$(curl -L -s https://download.sysdig.com/scanning/sysdig-cli-scanner/latest_version.txt)/linux/amd64/sysdig-cli-scanner
       - chmod +x ./sysdig-cli-scanner
-      
   build:
     commands:
       - docker build -t nginx-hello:hello1 .
       
   post_build:
     commands:
-      - pwd
-      - ./sysdig-cli-scanner --apiurl $SYSDIG_API_ENDPOINT nginx-hello:hello1
+      # Scan image for vulnerabilities
+      - ./sysdig-cli-scanner --apiurl $SYSDIG_API_ENDPOINT nginx-hello:hello1 > scanresults.txt || true
+      # Create a GitHub Commit Status based on Scan results
+      - | 
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          /repos/shawnjohnson/sysdig-scan-demo1/statuses/3f549b578a6ebfc213e887915364a1348608d218 \
+          -f state='success' \
+          -f target_url='https://example.com/build/status' \
+          -f description='The build succeeded!' \
+          -f context='continuous-integration/sysdig'
+      
