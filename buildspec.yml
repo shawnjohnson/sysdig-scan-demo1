@@ -11,7 +11,7 @@ phases:
   install:
     commands:
       # Install GitHub CLI from Community repo
-      - sudo dnf install gh
+      - sudo yum install gh
 
   pre_build:
     commands:
