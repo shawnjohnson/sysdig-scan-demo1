@@ -12,7 +12,7 @@ phases:
     commands:
       # Install GitHub CLI from Community repo
       - curl -LO https://github.com/cli/cli/releases/download/v2.14.3/gh_2.14.3_linux_amd64.rpm
-      - sudo yum install gh_2.14.3_linux_amd64.rpm
+      - sudo yum install gh_2.14.3_linux_amd64.rpm -y
 
   pre_build:
     commands:
