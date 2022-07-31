@@ -10,10 +10,14 @@ env:
 phases:
   install:
     commands:
+      # Install GitHub CLI from Community repo
+      - sudo dnf install gh
+
+  pre_build:
+    commands:
       # Download most recent version of Sysdig CLI Scanner
       - curl -LO https://download.sysdig.com/scanning/bin/sysdig-cli-scanner/$(curl -L -s https://download.sysdig.com/scanning/sysdig-cli-scanner/latest_version.txt)/linux/amd64/sysdig-cli-scanner
       - chmod +x ./sysdig-cli-scanner
-      
   build:
     commands:
       - docker build -t nginx-hello:hello1 .
