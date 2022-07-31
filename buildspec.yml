@@ -28,7 +28,7 @@ phases:
   post_build:
     commands:
       # Scan image for vulnerabilities
-      - ./sysdig-cli-scanner --apiurl $SYSDIG_API_ENDPOINT nginx-hello:hello1
+      - ./sysdig-cli-scanner --apiurl $SYSDIG_API_ENDPOINT nginx-hello:hello1 > scanresults.txt || true
       # Create a GitHub Commit Status based on Scan results
       - | 
         gh api \
