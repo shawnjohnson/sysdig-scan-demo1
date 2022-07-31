@@ -20,8 +20,9 @@ phases:
       
   post_build:
     commands:
+      - ./sysdig-cli-scanner --apiurl=$SYSDIG_API_ENDPOINT --output-json=sysdig-scan-report.json nginx-hello:hello1 : true
       - pwd
-      - ./sysdig-cli-scanner --apiurl=$SYSDIG_API_ENDPOINT --output-json=sysdig-scan-report.json nginx-hello:hello1
+      - cat sysdig-scan-report.json
 
 artifacts:
   files:
