@@ -30,12 +30,13 @@ phases:
       # Scan image for vulnerabilities
       - ./sysdig-cli-scanner --apiurl $SYSDIG_API_ENDPOINT nginx-hello:hello1
       # Create a GitHub Commit Status based on Scan results
-      - gh api \
-        --method POST \
-        -H "Accept: application/vnd.github+json" \
-        /repos/OWNER/REPO/statuses/SHA \
-        -f state='success'
-       -f target_url='https://example.com/build/status'
-       -f description='The build succeeded!'
-       -f context='continuous-integration/jenkins'
+      - | 
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          /repos/shawnjohnson/sysdig-scan-demo1/statuses/2a14909 \
+          -f state='success'
+          -f target_url='https://example.com/build/status'
+          -f description='The build succeeded!'
+          -f context='continuous-integration/sysdig'
       
