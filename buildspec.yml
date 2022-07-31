@@ -34,9 +34,9 @@ phases:
         gh api \
           --method POST \
           -H "Accept: application/vnd.github+json" \
-          /repos/shawnjohnson/sysdig-scan-demo1/statuses/2a14909 \
-          -f state='success'
-          -f target_url='https://example.com/build/status'
-          -f description='The build succeeded!'
+          /repos/shawnjohnson/sysdig-scan-demo1/statuses/3f549b578a6ebfc213e887915364a1348608d218 \
+          -f state='success' \
+          -f target_url='https://example.com/build/status' \
+          -f description='The build succeeded!' \
           -f context='continuous-integration/sysdig'
       
