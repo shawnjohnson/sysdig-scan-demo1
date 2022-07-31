@@ -20,5 +20,4 @@ phases:
       
   post_build:
     commands:
-      - pwd
       - ./sysdig-cli-scanner --apiurl $SYSDIG_API_ENDPOINT nginx-hello:hello1
